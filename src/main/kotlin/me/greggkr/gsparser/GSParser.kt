@@ -4,8 +4,19 @@ import java.io.File
 
 object GSParser {
     fun parse(file: File): String {
-        val text = file.readLines()
-        return ""
+        return file.readText()
+            .replace("<br/>", "")
+            .replace("&nbsp;", "")
+            // Remove head
+            .replace(Regex("<head.*?>.*?</head>", RegexOption.DOT_MATCHES_ALL), "")
+            // Remove script tags
+            .replace(Regex("<script.*?>.*?</script>", RegexOption.DOT_MATCHES_ALL), "")
+            // Remove noscript Tag
+            .replace(Regex("<noscript>.*?</noscript>", RegexOption.DOT_MATCHES_ALL), "")
+            // Replaces notes
+            .replace(Regex("<td class=\"AssignmentNote\"(.*?)>(.*?)</td>", RegexOption.DOT_MATCHES_ALL), "Note:'\$1'")
+            // Remove the weird input things
+            .replace(Regex("<input.*?( /)?>(.*?</input>)?", RegexOption.DOT_MATCHES_ALL), "")
     }
 }
 
@@ -21,5 +32,5 @@ fun main(args: Array<String>) {
         return
     }
 
-    GSParser.parse(file)
+    println(GSParser.parse(file))
 }

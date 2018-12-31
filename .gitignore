@@ -120,3 +120,5 @@ hs_err_pid*
 
 .gradle/
 .idea/
+# contains bad grades lol
+output.txt
