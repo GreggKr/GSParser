@@ -23,6 +23,14 @@ object GSParser {
             .replace(Regex("<td class=\"AssignmentName\"(.*?)>(.*?)</td>", RegexOption.DOT_MATCHES_ALL), "Name:'\$2'")
             // Replace Average
             .replace(Regex("<td>Average</td><td>(.*?)</td>", RegexOption.DOT_MATCHES_ALL), "Average:'\$1`")
+            // Remove some of the junk
+//            .replace(Regex("<table(.*?)>(.*?)</table>", RegexOption.DOT_MATCHES_ALL), "\$1")
+            // Remove navbar
+            .replace(Regex("<ul class=\"NavBarLinks\">.*?</ul>", RegexOption.DOT_MATCHES_ALL), "")
+            // Remove current user
+            .replace(Regex("<p class=\"CurrentUser\">.*?</p>", RegexOption.DOT_MATCHES_ALL), "")
+            // Bunch of magic strings
+            .replace(PG_HEADER_STD_HEADER_TOP_OF_TABLE, "")
             // Replace Date Assigned
             .replace(
                 Regex("<td class=\"DateAssigned\"(.*?)>(.*?)</td>", RegexOption.DOT_MATCHES_ALL),
@@ -40,7 +48,6 @@ object GSParser {
             )
             // Very annoying things at the end of each tr
             .replace("<td></td>", "")
-        // Renive
     }
 }
 
