@@ -3,7 +3,7 @@ package me.greggkr.gsparser
 import java.io.File
 
 object GSParser {
-    fun parse(file: File): String {
+    fun deserialize(file: File): String {
         return file.readText()
             .replace("<br/>", "")
             .replace("&nbsp;", "")
@@ -21,6 +21,8 @@ object GSParser {
             .replace(Regex("<td class=\"AssignmentNote\"(.*?)>(.*?)</td>", RegexOption.DOT_MATCHES_ALL), "Note:'\$2'")
             // Replace Names
             .replace(Regex("<td class=\"AssignmentName\"(.*?)>(.*?)</td>", RegexOption.DOT_MATCHES_ALL), "Name:'\$2'")
+            // Replace Average
+            .replace(Regex("<td>Average</td><td>(.*?)</td>", RegexOption.DOT_MATCHES_ALL), "Average:'\$1`")
             // Replace Date Assigned
             .replace(
                 Regex("<td class=\"DateAssigned\"(.*?)>(.*?)</td>", RegexOption.DOT_MATCHES_ALL),
@@ -54,5 +56,5 @@ fun main(args: Array<String>) {
         return
     }
 
-    println(GSParser.parse(file))
+    println(GSParser.deserialize(file))
 }
